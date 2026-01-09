@@ -5,6 +5,19 @@
 import { Tensor } from '../ml/tensor'
 
 /**
+ * Adam optimizer default hyperparameters
+ */
+const ADAM_DEFAULT_BETA1 = 0.9      // Exponential decay rate for first moment
+const ADAM_DEFAULT_BETA2 = 0.999    // Exponential decay rate for second moment
+const ADAM_DEFAULT_EPSILON = 1e-8   // Small constant for numerical stability
+
+/**
+ * RMSprop optimizer default hyperparameters
+ */
+const RMSPROP_DEFAULT_ALPHA = 0.99  // Exponential decay rate
+const RMSPROP_DEFAULT_EPSILON = 1e-8 // Small constant for numerical stability
+
+/**
  * Base optimizer interface
  */
 export interface Optimizer {
@@ -83,9 +96,9 @@ export class Adam implements Optimizer {
 
   constructor(
     learningRate: number = 0.001,
-    beta1: number = 0.9,
-    beta2: number = 0.999,
-    epsilon: number = 1e-8
+    beta1: number = ADAM_DEFAULT_BETA1,
+    beta2: number = ADAM_DEFAULT_BETA2,
+    epsilon: number = ADAM_DEFAULT_EPSILON
   ) {
     this.learningRate = learningRate
     this.beta1 = beta1
@@ -167,8 +180,8 @@ export class RMSprop implements Optimizer {
 
   constructor(
     learningRate: number = 0.01,
-    alpha: number = 0.99,
-    epsilon: number = 1e-8
+    alpha: number = RMSPROP_DEFAULT_ALPHA,
+    epsilon: number = RMSPROP_DEFAULT_EPSILON
   ) {
     this.learningRate = learningRate
     this.alpha = alpha

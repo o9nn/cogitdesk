@@ -5,6 +5,11 @@
 import { Tensor } from '../ml/tensor'
 
 /**
+ * Xavier/Glorot initialization scaling factor
+ */
+const XAVIER_INIT_FACTOR = 2.0
+
+/**
  * Base layer interface
  */
 export interface Layer {
@@ -25,7 +30,7 @@ export class Linear implements Layer {
 
   constructor(inputSize: number, outputSize: number) {
     // Initialize with Xavier/Glorot initialization
-    const scale = Math.sqrt(2.0 / (inputSize + outputSize))
+    const scale = Math.sqrt(XAVIER_INIT_FACTOR / (inputSize + outputSize))
     this.weight = Tensor.randn([outputSize, inputSize], 0, scale)
     this.bias = Tensor.zeros([outputSize])
   }

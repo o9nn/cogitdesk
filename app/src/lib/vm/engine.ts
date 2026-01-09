@@ -5,6 +5,11 @@
 import { OpCode, Instruction, VMContext, VMProgram, VMResult } from './types'
 
 /**
+ * Default maximum cycles to prevent infinite loops
+ */
+const DEFAULT_MAX_CYCLES = 100000
+
+/**
  * Virtual Machine executor
  */
 export class VMEngine {
@@ -12,7 +17,7 @@ export class VMEngine {
   private program: VMProgram | null = null
   private maxCycles: number
 
-  constructor(maxCycles: number = 100000) {
+  constructor(maxCycles: number = DEFAULT_MAX_CYCLES) {
     this.maxCycles = maxCycles
     this.context = this.createContext()
   }

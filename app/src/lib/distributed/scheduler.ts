@@ -12,6 +12,16 @@ import {
 } from './types'
 
 /**
+ * Default task completion check interval in milliseconds
+ */
+export const TASK_CHECK_INTERVAL_MS = 100
+
+/**
+ * Default task timeout in milliseconds
+ */
+export const TASK_TIMEOUT_MS = 60000
+
+/**
  * Task scheduler manages task distribution across workers
  */
 export class TaskScheduler {
@@ -252,6 +262,6 @@ export class TaskScheduler {
   }
 
   private generateTaskId(): string {
-    return `task_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+    return `task_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`
   }
 }

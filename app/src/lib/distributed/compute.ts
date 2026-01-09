@@ -2,7 +2,7 @@
  * Distributed compute coordinator
  */
 
-import { TaskScheduler } from './scheduler'
+import { TaskScheduler, TASK_CHECK_INTERVAL_MS, TASK_TIMEOUT_MS } from './scheduler'
 import { Task, TaskStatus, DistributedOpType } from './types'
 import { Tensor } from '../ml/tensor'
 
@@ -171,13 +171,13 @@ export class DistributedCompute {
           clearInterval(checkInterval)
           reject(new Error(task.error || 'Task failed'))
         }
-      }, 100)
+      }, TASK_CHECK_INTERVAL_MS)
 
-      // Timeout after 60 seconds
+      // Timeout after configured duration
       setTimeout(() => {
         clearInterval(checkInterval)
         reject(new Error(`Task ${taskId} timed out`))
-      }, 60000)
+      }, TASK_TIMEOUT_MS)
     })
   }
 
