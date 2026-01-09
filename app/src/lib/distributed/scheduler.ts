@@ -31,6 +31,8 @@ export class TaskScheduler {
       currentLoad: 0,
       lastHeartbeat: new Date(),
     })
+    // Try to schedule pending tasks
+    this.scheduleTasks()
   }
 
   /**
