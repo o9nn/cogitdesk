@@ -240,9 +240,9 @@ export class TaskScheduler {
    */
   checkWorkerHealth(timeoutMs: number = 30000): void {
     const now = new Date()
+    const nowTime = now.getTime()
     for (const worker of this.workers.values()) {
-      const timeSinceHeartbeat =
-        now.getTime() - worker.lastHeartbeat.getTime()
+      const timeSinceHeartbeat = nowTime - worker.lastHeartbeat.getTime()
       if (timeSinceHeartbeat > timeoutMs && worker.status !== 'offline') {
         worker.status = 'offline'
         // Reassign tasks from this worker
@@ -261,7 +261,14 @@ export class TaskScheduler {
     }
   }
 
+  /**
+   * Generate a unique task ID
+   * Note: For high-frequency task creation in production, consider using
+   * crypto.randomUUID() or a proper UUID library for better uniqueness guarantees
+   */
   private generateTaskId(): string {
+    // Using timestamp + random string provides reasonable uniqueness for most use cases
+    // The random component uses base36 which gives ~2 billion possibilities for 6 chars
     return `task_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`
   }
 }
